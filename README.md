@@ -6,9 +6,9 @@
 
 Nuestra inspiración es este juego en línea contenido enteramente en un canvas. Nosotros no lo haremos usando un canvas, sino mediante elementos HTML comunes y corrientes para practicar con la API Drag-and-drop.
 
-![alt text](./readme-images/inspiration.png)
+![alt text](./.readme-images/inspiration.png)
 
-#### El plan general
+### El plan general
 
 - Cada tarjeta es una imagen (o un texto) asociada con una descripción.
 - Un conjunto de tarjetas es un mazo.
@@ -17,7 +17,7 @@ Nuestra inspiración es este juego en línea contenido enteramente en un canvas.
 - El usuario puede cargar su propio mazo.
 - Los niveles cargados por el usuario persisten localmente y el usuario los puede borrar.
 
-#### Detalles sobre la experiencia del juego
+### Detalles sobre la experiencia del juego
 
 - Mostramos los elementos importantes dentro de una pizarra.
 - El juego progresa preguntando por algunas tarjetas elegidas aleatoriamente.
@@ -30,7 +30,7 @@ Nuestra inspiración es este juego en línea contenido enteramente en un canvas.
 - Si la mano oponente lo hace antes, ganará el punto.
 - El juego lo gana el jugador que acumule más puntos al final del juego.
 
-#### Detalles adicionales
+### Detalles adicionales
 
 - Las tarjetas de un mazo pueden ser cargadas mediante la API drag-and-drop.
 - El usuario solo arrastra sus imágenes y por defecto las descripciones son tomadas de los nombres de estas.
