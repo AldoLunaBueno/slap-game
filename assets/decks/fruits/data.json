@@ -1,0 +1,12 @@
+{
+  "name": "Fruits",
+  "description": "apple blueberry",
+  "images": [
+    { "src": "apple.webp", "name": "apple" },
+    { "src": "grape.webp", "name": "grape" },
+    { "src": "banana.webp", "name": "banana" },
+    { "src": "orange.webp", "name": "orange" },
+    { "src": "blueberry.webp", "name": "blueberry" },
+    { "src": "strawberry.webp", "name": "strawberry" }
+  ]
+}

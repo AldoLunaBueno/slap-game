@@ -1,0 +1,12 @@
+{
+  "name": "Fruits",
+  "description": "goat, cow",
+  "images": [
+    { "src": "bear.webp", "name": "bear" },
+    { "src": "lion.webp", "name": "lion" },
+    { "src": "goat.webp", "name": "goat" },
+    { "src": "cow.webp", "name": "cow" },
+    { "src": "parrot.webp", "name": "parrot" },
+    { "src": "horse.webp", "name": "horse" }
+  ]
+}
