@@ -28,24 +28,34 @@ function play(data, deckId) {
   const computerPlace = computerHand.parentElement;
   let sample = setImageSample(data, deckId, options);
 
+  let optionSelected = null;
+
   humanHand.addEventListener("mousedown", function loop() {
     options.forEach((option) => {
       option.addEventListener("dragover", (ev) => {
         ev.preventDefault();
-      });
-
-      option.addEventListener("drop", (ev) => {
-        ev.preventDefault();
         if (ev.target.nodeName == "IMG") {
-          ev.target.parentElement.appendChild(humanHand);
+          optionSelected = ev.target.parentElement;
         } else {
-          ev.target.appendChild(humanHand);
+          optionSelected = ev.target;
         }
       });
+      option.addEventListener("dragleave", () => {
+        // Clear the optionSelected if leaving the current option
+        optionSelected = null;
+      });
+    });
+
+    humanHand.addEventListener("dragend", (ev) => {
+      if (optionSelected) {
+        optionSelected.appendChild(humanHand); // Only drop if over a valid option
+        optionSelected = null; // Reset after dropping
+      }
     });
     const rand = _.random(0, numOptions - 1);
     const itemName = sample[rand].name;
     const correctOption = options[rand];
+
     speak(itemName);
     this.removeEventListener("mousedown", loop);
     setTimeout(() => {
@@ -63,9 +73,6 @@ function play(data, deckId) {
       humanPlace.appendChild(humanHand);
       computerPlace.appendChild(computerHand);
       this.addEventListener("mousedown", loop);
-      options.forEach((option) => {
-        option.removeEventListener("drop", handleDrop);
-      });
     }, totalTime);
   });
 }
@@ -107,4 +114,32 @@ function setImageSample(data, deckId, options) {
     options[i].appendChild(imageElement);
   }
   return sample;
+}
+
+class Game {
+  constructor(numbMoves) {
+    this.computer = 0;
+    this.human = 0;
+    this.count = 0;
+    this.numbMoves = numbMoves;
+  }
+
+  computerPoint() {
+    this.computer += 1;
+    this.count += 1;
+    return this.humanWin;
+  }
+
+  humanPoint() {
+    this.human += 1;
+    this.count += 1;
+    return this.humanWin;
+  }
+
+  get humanWin() {
+    if (this.count != this.numbMoves) return undefined;
+    if (this.human == this.computer) return null;
+
+    return this.human > this.computer;
+  }
 }
