@@ -1,5 +1,5 @@
 let speakingTime = 1000;
-let computerReactionTime = 2000;
+let computerReactionTime = 500;
 let gapTime = 1000;
 let numOptions = 4;
 
@@ -20,6 +20,9 @@ function play(data, deckId) {
    * Repetimos todo hasta que el juego termine.
    */
 
+  let game = new Game(5);
+  const computerScore = $(".player.computer span.score");
+  const humanScore = $(".player.human span.score");
   const options = $$(".options article");
   const humanHand = $(".hand.human");
   humanHand.draggable = true;
@@ -28,28 +31,28 @@ function play(data, deckId) {
   const computerPlace = computerHand.parentElement;
   let sample = setImageSample(data, deckId, options);
 
-  let optionSelected = null;
+  let selectedOption = null;
+
+  options.forEach((option) => {
+    option.addEventListener("dragover", (ev) => {
+      ev.preventDefault();
+      if (ev.target.nodeName == "IMG") {
+        selectedOption = ev.target.parentElement;
+      } else {
+        selectedOption = ev.target;
+      }
+    });
+    option.addEventListener("dragleave", () => {
+      // Clear the optionSelected if leaving the current option
+      selectedOption = null;
+    });
+  });
 
   humanHand.addEventListener("mousedown", function loop() {
-    options.forEach((option) => {
-      option.addEventListener("dragover", (ev) => {
-        ev.preventDefault();
-        if (ev.target.nodeName == "IMG") {
-          optionSelected = ev.target.parentElement;
-        } else {
-          optionSelected = ev.target;
-        }
-      });
-      option.addEventListener("dragleave", () => {
-        // Clear the optionSelected if leaving the current option
-        optionSelected = null;
-      });
-    });
-
     humanHand.addEventListener("dragend", (ev) => {
-      if (optionSelected) {
-        optionSelected.appendChild(humanHand); // Only drop if over a valid option
-        optionSelected = null; // Reset after dropping
+      if (selectedOption) {
+        selectedOption.appendChild(humanHand); // Only drop if over a valid option
+        selectedOption; // Reset after dropping
       }
     });
     const rand = _.random(0, numOptions - 1);
@@ -62,6 +65,16 @@ function play(data, deckId) {
       move(computerHand, correctOption);
     }, speakingTime);
 
+    setTimeout(() => {
+      if (correctOption === selectedOption) {
+        game.humanPoint();
+      } else {
+        game.computerPoint();
+      }
+      humanScore.innerHTML = game.human;
+      computerScore.innerHTML = game.computer;
+    }, speakingTime + computerReactionTime);
+
     const totalTime = speakingTime + computerReactionTime + gapTime;
 
     setTimeout(() => {
@@ -73,6 +86,19 @@ function play(data, deckId) {
       humanPlace.appendChild(humanHand);
       computerPlace.appendChild(computerHand);
       this.addEventListener("mousedown", loop);
+
+      if (game.humanWin === undefined) return;
+
+      if (game.humanWin === true) {
+        alert("You win!");
+      } else if (game.humanWin === false) {
+        alert("The hand win!");
+      } else if (game.humanWin === null) {
+        alert("It's a draw...");
+      }
+      game = new Game(5);
+      humanScore.innerHTML = 0;
+    computerScore.innerHTML = 0;
     }, totalTime);
   });
 }
@@ -85,13 +111,11 @@ function move(source, target) {
   const x = targetX - sourceX;
   const y = targetY - sourceY;
 
-  source.style.transition = `all ${computerReactionTime / 1000}s`;
+  source.style.transition = `all ${computerReactionTime / 1000}s linear`;
   source.style.transform = `translate(${x}px, ${y}px)`;
 
   setTimeout(() => {
     target.appendChild(source);
-    source.style.width = source.offsetWidth;
-    source.style.height = source.offsetHeight;
     source.style.transform = "";
     source.style.transition = "";
   }, computerReactionTime);
