@@ -4,7 +4,7 @@ let numOptions = 4;
 let lengthGame = 10;
 
 export function init(deckId) {
-  fetch(`/assets/decks/${deckId}/data.json`)
+  fetch(`assets/decks/${deckId}/data.json`)
     .then((response) => response.json())
     .then((data) => {
       play(data, deckId);
@@ -164,7 +164,7 @@ function setImageSample(data, deckId, options) {
   for (let i = 0; i < numOptions; i++) {
     const image = sample[i];
     const imageElement = document.createElement("img");
-    imageElement.src = `/assets/decks/${deckId}/images/${image.src}`;
+    imageElement.src = `assets/decks/${deckId}/images/${image.src}`;
     imageElement.draggable = false;
     imageElement.className = "item";
     options[i].appendChild(imageElement);

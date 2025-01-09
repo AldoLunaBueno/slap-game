@@ -4,7 +4,7 @@ export function init() {
   $$("article").forEach((deck) => {
     deck.addEventListener("click", () => {
       const deckId = deck.dataset.deckId;
-      fetch(`/sections/play.html`) // fetch play.html fragment and inject it
+      fetch(`sections/play.html`) // fetch play.html fragment and inject it
         .then((response) => response.text())
         .then((html) => {
           const main = document.querySelector("main");
