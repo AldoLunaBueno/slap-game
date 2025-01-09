@@ -7,6 +7,16 @@
     { "src": "goat.webp", "name": "goat" },
     { "src": "cow.webp", "name": "cow" },
     { "src": "parrot.webp", "name": "parrot" },
-    { "src": "horse.webp", "name": "horse" }
+    { "src": "horse.webp", "name": "horse" },
+    { "src": "donkey.webp", "name": "donkey" },
+    { "src": "frog.webp", "name": "frog" },
+    { "src": "pig.webp", "name": "pig" },
+    { "src": "pigeon.webp", "name": "pigeon" },
+    { "src": "rabbit.webp", "name": "rabbit" },
+    { "src": "shark.webp", "name": "shark" },
+    { "src": "snake.webp", "name": "snake" },
+    { "src": "tiger.webp", "name": "tiger" },
+    { "src": "turtle.webp", "name": "turtle" },
+    { "src": "wolf.webp", "name": "wolf" }
   ]
 }

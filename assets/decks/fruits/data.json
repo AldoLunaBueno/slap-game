@@ -7,6 +7,13 @@
     { "src": "banana.webp", "name": "banana" },
     { "src": "orange.webp", "name": "orange" },
     { "src": "blueberry.webp", "name": "blueberry" },
-    { "src": "strawberry.webp", "name": "strawberry" }
+    { "src": "strawberry.webp", "name": "strawberry" },
+    { "src": "cherry.webp", "name": "cherry" },
+    { "src": "fig.webp", "name": "fig" },
+    { "src": "papaya.webp", "name": "papaya" },
+    { "src": "peach.webp", "name": "peach" },
+    { "src": "pear.webp", "name": "pear" },
+    { "src": "pineapple.webp", "name": "pineapple" },
+    { "src": "watermelon.webp", "name": "watermelon" }
   ]
 }
