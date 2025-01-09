@@ -1,7 +1,7 @@
-let speakingTime = 1000;
 let computerReactionTime = 500;
 let gapTime = 1000;
 let numOptions = 4;
+let lengthGame = 10;
 
 export function init(deckId) {
   fetch(`/assets/decks/${deckId}/data.json`)
@@ -11,7 +11,7 @@ export function init(deckId) {
     });
 }
 
-function play(data, deckId) {
+async function play(data, deckId) {
   /**
    * Nuevas imágenes se cargan.
    * Las manos vuelven a su lugar y la mano humana espera a ser presionada.
@@ -20,7 +20,7 @@ function play(data, deckId) {
    * Repetimos todo hasta que el juego termine.
    */
 
-  let game = new Game(5);
+  let game = new Game(lengthGame);
   const computerScore = $(".player.computer span.score");
   const humanScore = $(".player.human span.score");
   const options = $$(".options article");
@@ -32,50 +32,61 @@ function play(data, deckId) {
   let sample = setImageSample(data, deckId, options);
 
   let selectedOption = null;
+  let mouseoverOption = null;
+  let canDrop = true;
 
   options.forEach((option) => {
     option.addEventListener("dragover", (ev) => {
       ev.preventDefault();
       if (ev.target.nodeName == "IMG") {
-        selectedOption = ev.target.parentElement;
+        mouseoverOption = ev.target.parentElement;
       } else {
-        selectedOption = ev.target;
+        mouseoverOption = ev.target;
       }
     });
     option.addEventListener("dragleave", () => {
       // Clear the optionSelected if leaving the current option
-      selectedOption = null;
     });
   });
 
-  humanHand.addEventListener("mousedown", function loop() {
-    humanHand.addEventListener("dragend", (ev) => {
-      if (selectedOption) {
-        selectedOption.appendChild(humanHand); // Only drop if over a valid option
-        selectedOption; // Reset after dropping
-      }
-    });
+  humanHand.addEventListener("dragend", (ev) => {
+    if (!mouseoverOption || !canDrop) return;
+    mouseoverOption.appendChild(humanHand); // Only drop if over a valid option
+    selectedOption = mouseoverOption;
+    humanHand.draggable = false;
+    mouseoverOption = null;
+  });
+
+  humanHand.addEventListener("mousedown", async function loop() {
+    humanHand.draggable = true;
+    canDrop = true;
+    this.removeEventListener("mousedown", loop);
+
     const rand = _.random(0, numOptions - 1);
     const itemName = sample[rand].name;
     const correctOption = options[rand];
 
-    speak(itemName);
-    this.removeEventListener("mousedown", loop);
-    setTimeout(() => {
-      move(computerHand, correctOption);
-    }, speakingTime);
+    await speak(itemName);
+
+    move(computerHand, correctOption);
 
     setTimeout(() => {
       if (correctOption === selectedOption) {
         game.humanPoint();
+        humanScore.innerHTML = game.human;
+        pulse(humanScore);
       } else {
         game.computerPoint();
+        computerScore.innerHTML = game.computer;
+        pulse(computerScore);
       }
-      humanScore.innerHTML = game.human;
-      computerScore.innerHTML = game.computer;
-    }, speakingTime + computerReactionTime);
 
-    const totalTime = speakingTime + computerReactionTime + gapTime;
+      selectedOption = null; // Reset after evaluation
+      humanHand.draggable = false;
+      canDrop = false;
+    }, computerReactionTime);
+
+    const totalTime = computerReactionTime + gapTime;
 
     setTimeout(() => {
       humanPlace.appendChild(humanHand);
@@ -96,11 +107,18 @@ function play(data, deckId) {
       } else if (game.humanWin === null) {
         alert("It's a draw...");
       }
-      game = new Game(5);
+      game = new Game(lengthGame);
       humanScore.innerHTML = 0;
-    computerScore.innerHTML = 0;
+      computerScore.innerHTML = 0;
     }, totalTime);
   });
+}
+
+function pulse(el) {
+  el.classList.add("pulse");
+  setTimeout(() => {
+    el.classList.remove("pulse");
+  }, 2000);
 }
 
 function move(source, target) {
@@ -125,6 +143,9 @@ function speak(name) {
   let utterance = new SpeechSynthesisUtterance(`Where is the ${name}?`);
   utterance.lang = "en-US";
   speechSynthesis.speak(utterance);
+  return new Promise((resolve) => {
+    utterance.addEventListener("end", resolve);
+  });
 }
 
 function setImageSample(data, deckId, options) {
