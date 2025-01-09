@@ -164,7 +164,7 @@ function setImageSample(data, deckId, options) {
   for (let i = 0; i < numOptions; i++) {
     const image = sample[i];
     const imageElement = document.createElement("img");
-    imageElement.src = `assets/decks/${deckId}/images/${image.src}`;
+    imageElement.src = `/assets/decks/${deckId}/images/${image.src}`;
     imageElement.draggable = false;
     imageElement.className = "item";
     options[i].appendChild(imageElement);
