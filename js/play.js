@@ -44,9 +44,6 @@ async function play(data, deckId) {
         mouseoverOption = ev.target;
       }
     });
-    option.addEventListener("dragleave", () => {
-      // Clear the optionSelected if leaving the current option
-    });
   });
 
   humanHand.addEventListener("dragend", (ev) => {
@@ -63,10 +60,10 @@ async function play(data, deckId) {
     this.removeEventListener("mousedown", loop);
 
     const rand = _.random(0, numOptions - 1);
-    const itemName = sample[rand].name;
+    const correctName = sample[rand].name;
     const correctOption = options[rand];
 
-    await speak(itemName);
+    await speak(correctName);
 
     move(computerHand, correctOption);
 
@@ -81,9 +78,11 @@ async function play(data, deckId) {
         pulse(computerScore);
       }
 
-      selectedOption = null; // Reset after evaluation
+      
       humanHand.draggable = false;
       canDrop = false;
+      showInfo(correctOption, correctName)
+      selectedOption = null; // Reset after evaluation
     }, computerReactionTime);
 
     const totalTime = computerReactionTime + gapTime;
@@ -101,9 +100,9 @@ async function play(data, deckId) {
       if (game.humanWin === undefined) return;
 
       if (game.humanWin === true) {
-        alert("You win!");
+        alert("You win! :D");
       } else if (game.humanWin === false) {
-        alert("The hand win!");
+        alert("The hand win! :O");
       } else if (game.humanWin === null) {
         alert("It's a draw...");
       }
@@ -112,6 +111,18 @@ async function play(data, deckId) {
       computerScore.innerHTML = 0;
     }, totalTime);
   });
+}
+
+function showInfo(anchor, info) {
+  anchor.classList.add("anchor")
+  const infoElem = $(".infobox")
+  infoElem.style.display = "block"
+  infoElem.innerHTML = info
+  setTimeout(() => {
+    infoElem.style.display = "none"
+    infoElem.innerHTML = ""
+    anchor.classList.remove("anchor")
+  }, 1000);  
 }
 
 function pulse(el) {
