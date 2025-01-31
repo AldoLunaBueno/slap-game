@@ -1,0 +1,19 @@
+{
+  "name": "Greetings",
+  "description": "good morning, good afternoon, good evening, good night",
+  "images": [
+    { "src": "n0.png", "name": "zero" },
+    { "src": "n1.png", "name": "one" },
+    { "src": "n2.png", "name": "two" },
+    { "src": "n3.png", "name": "three" },
+    { "src": "n4.png", "name": "four" },
+    { "src": "n5.png", "name": "five" },
+    { "src": "n6.png", "name": "six" },
+    { "src": "n7.png", "name": "seven" },
+    { "src": "n8.png", "name": "eight" },
+    { "src": "n9.png", "name": "nine" },
+    { "src": "n10.png", "name": "ten" },
+    { "src": "n11.png", "name": "eleven" },
+    { "src": "n12.png", "name": "twelve" }
+  ]
+}

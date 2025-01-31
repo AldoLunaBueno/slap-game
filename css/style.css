@@ -209,6 +209,7 @@ main section.play {
     position: absolute;
     width: 10vh;
     height: auto;
+    touch-action: none;
 
     &.computer {
       pointer-events: none;

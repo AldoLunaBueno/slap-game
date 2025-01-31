@@ -1,0 +1,10 @@
+{
+  "name": "Greetings",
+  "description": "good morning, good afternoon, good evening, good night",
+  "images": [
+    { "src": "good-morning.webp", "name": "good morning" },
+    { "src": "good-afternoon.webp", "name": "good afternoon" },
+    { "src": "good-evening.webp", "name": "good evening" },
+    { "src": "good-night.webp", "name": "good night" }
+  ]
+}

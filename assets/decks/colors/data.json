@@ -1,0 +1,17 @@
+{
+  "name": "Fruits",
+  "description": "apple blueberry",
+  "images": [
+    { "src": "black.png", "name": "black" },
+    { "src": "blue.png", "name": "blue" },
+    { "src": "brown.png", "name": "brown" },
+    { "src": "gray.png", "name": "gray" },
+    { "src": "green.png", "name": "green" },
+    { "src": "orange.png", "name": "orange" },
+    { "src": "pink.png", "name": "pink" },
+    { "src": "purple.png", "name": "purple" },
+    { "src": "red.png", "name": "red" },
+    { "src": "white.png", "name": "white" },
+    { "src": "yellow.png", "name": "yellow" }
+  ]
+}

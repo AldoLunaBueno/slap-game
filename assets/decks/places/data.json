@@ -1,0 +1,14 @@
+{
+  "name": "Fruits",
+  "description": "academy home hospital house",
+  "images": [
+    { "src": "academy.webp", "name": "academy" },
+    { "src": "home.webp", "name": "home" },
+    { "src": "hospital.webp", "name": "hospital" },
+    { "src": "house.webp", "name": "house" },
+    { "src": "park.webp", "name": "park" },
+    { "src": "school.webp", "name": "school" },
+    { "src": "store.webp", "name": "store" },
+    { "src": "university.webp", "name": "university" }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Greetings",
+  "description": "good morning, good afternoon, good evening, good night",
+  "images": [
+    { "src": "ankle.png", "name": "ankle" },
+    { "src": "arm.png", "name": "arm" },
+    { "src": "back.png", "name": "back" },
+    { "src": "belly-button.png", "name": "belly button" },
+    { "src": "chest.png", "name": "chest" },
+    { "src": "ear.png", "name": "ear" },
+    { "src": "elbow.png", "name": "elbow" },
+    { "src": "eye.png", "name": "eye" },
+    { "src": "eyebrow.png", "name": "eyebrow" },
+    { "src": "face.png", "name": "face" },
+    { "src": "finger.png", "name": "finger" },
+    { "src": "foot.png", "name": "foot" },
+    { "src": "hair.png", "name": "hair" },
+    { "src": "hand.png", "name": "hand" },
+    { "src": "heel.png", "name": "heel" },
+    { "src": "hip.png", "name": "hip" },
+    { "src": "knee.png", "name": "knee" },
+    { "src": "leg.png", "name": "leg" },
+    { "src": "mouth.png", "name": "mouth" },
+    { "src": "neck.png", "name": "neck" },
+    { "src": "nose.png", "name": "nose" },
+    { "src": "shoulder.png", "name": "shoulder" },
+    { "src": "thigh.png", "name": "thigh" },
+    { "src": "waist.png", "name": "waist" }
+  ]
+}

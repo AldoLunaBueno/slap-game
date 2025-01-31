@@ -1,0 +1,13 @@
+bored
+thirsty
+angry
+sad
+happy
+tired
+shy
+hot
+cold
+in love
+sick
+sleepy
+hungry

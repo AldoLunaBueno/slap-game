@@ -44,7 +44,7 @@ async function play(data, deckId) {
         mouseoverOption = ev.target;
       }
     });
-  });
+  });  
 
   humanHand.addEventListener("dragend", (ev) => {
     if (!mouseoverOption || !canDrop) return;
