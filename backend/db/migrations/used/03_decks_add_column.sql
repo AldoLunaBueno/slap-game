@@ -1,0 +1,2 @@
+ALTER TABLE decks 
+ADD COLUMN image_url TEXT NULL;
