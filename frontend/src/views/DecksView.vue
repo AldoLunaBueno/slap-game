@@ -19,24 +19,23 @@ export default {
 </script>
 
 <template>
-  <div class="container-lg my-4">
-    <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 justify-content-center">
-      <!-- Sample Cards (Dynamically generated) -->
+  <div class="container-lg m-md-5">
+    <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+      <!-- cards dynamically generated -->
       <article class="col" v-for="deck in decks" :key="deck.id">
         <div class="card">
-          <img :src="deck.image_url" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Florida_Box_Turtle_Digon3.jpg/330px-Florida_Box_Turtle_Digon3.jpg" class="card-img-top" alt="Image" />
+          <img :src="deck.image_url" class="card-img-top" alt="Image"/>
           <div class="card-body">
-            <span>{{ deck.name }}</span>
-            <footer class="card-footer">{{ deck.description }}</footer>
+            <span class="card-title">{{ deck.name }}</span>
+            <footer class="card-footer text-muted">{{ deck.description }}</footer>
           </div>
         </div>
       </article>
-      <!-- More cards here -->
     </section>
   </div>
 </template>
 
-<style>
+<style scoped>
 .card {
   height: 200px;
   border-radius: 8px;
@@ -63,5 +62,9 @@ export default {
   font-size: 0.7rem;
   background: none;
   border: none;
+}
+
+img {
+  -webkit-user-drag: none;
 }
 </style>
