@@ -34,17 +34,6 @@ export default {
       <!-- More cards here -->
     </section>
   </div>
-  <!-- <div class="card">
-        <article v-for="deck in decks" :key="deck.id" class="card-item">
-        <aside >
-          <img :src="deck.image_url" alt="" />
-        </aside>
-        <div>
-          <span>{{ deck.name }}</span>
-          <footer>{{ deck.description }}</footer>
-        </div>
-      </article>
-      </div> -->
 </template>
 
 <style>

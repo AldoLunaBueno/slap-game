@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DecksPage from '@/views/DecksPage.vue'
+import DecksPage from '@/views/DecksView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
