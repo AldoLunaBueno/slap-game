@@ -23,19 +23,25 @@ export default {
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
       <!-- cards dynamically generated -->
       <article class="col" v-for="deck in decks" :key="deck.id">
-        <div class="card">
-          <img :src="deck.image_url" class="card-img-top" alt="Image"/>
-          <div class="card-body">
-            <span class="card-title">{{ deck.name }}</span>
-            <footer class="card-footer text-muted">{{ deck.description }}</footer>
+        <a :href="'/play/' + deck.id">
+          <div class="card">
+            <img :src="deck.image_url" class="card-img-top" alt="Image"/>
+            <div class="card-body">
+              <span class="card-title">{{ deck.name }}</span>
+              <footer class="card-footer text-muted">{{ deck.description }}</footer>
+            </div>
           </div>
-        </div>
+        </a>
       </article>
     </section>
   </div>
 </template>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
+
 .card {
   height: 200px;
   border-radius: 8px;

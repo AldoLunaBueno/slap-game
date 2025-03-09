@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import DecksPage from '@/views/DecksView.vue'
+import DecksView from '@/views/DecksView.vue'
+import PlayView from '@/views/PlayView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,8 +12,14 @@ const router = createRouter({
     {
       path: '/decks',
       name: 'decks',
-      component: DecksPage,
+      component: DecksView,
     },
+    {
+      path: '/play/:deckId',
+      name: 'play',
+      component: PlayView,
+      props: true,
+    }
   ],
 })
 
