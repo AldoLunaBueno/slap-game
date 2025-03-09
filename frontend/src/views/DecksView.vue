@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-  <div class="container-lg m-md-5">
+  <div class="container-lg py-4 justify-content-center">
     <section class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
       <!-- cards dynamically generated -->
       <article class="col" v-for="deck in decks" :key="deck.id">
