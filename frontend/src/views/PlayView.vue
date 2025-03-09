@@ -1,23 +1,32 @@
 <script type="module">
 import CardsService from "@/services/CardsService";
+import _ from "lodash";
 
 export default {
   name: "play",
   data() {
     return {
       cards: [],
+      numOptions: 4,
+      rand: 0,
     };
   },
   props: {
     deckId: String,
   },
-  mounted() {
-    this.getCards();
+  async mounted() {
+    await this.getCards();
   },
   methods: {
     async getCards() {
       this.cards = await CardsService.getCards(this.deckId);
     },
+    getSomeCards() {
+      this.rand = _.sample()
+    },
+    printConsole() {
+      console.log(this.cards)
+    }
   },
 };
 </script>
@@ -35,7 +44,7 @@ export default {
     </div>
 
     <div class="options">
-      <article></article>
+      <article>{{ rand }}</article>
       <article></article>
       <article></article>
       <article></article>
