@@ -4,11 +4,19 @@
 
 ### ¿Qué queremos?
 
-Queremos que la experiencia de aprender inglés sea más divertida. La inspiración es este juego en línea contenido enteramente en un canvas:
+Queremos que la experiencia de aprender inglés sea más divertida. La idea vino de este juego en línea:
 
-![alt text](./.readme-images/inspiration.png)
+![[captura del juego que nos inspiró]](./.readme-images/inspiration.png)
+https://www.mes-games.com/
 
-Nuestra aplicación no usa canvas, sino elementos HTML comunes y corrientes mediante la API Drag-and-Drop, y puede ser usado en dispositivos móviles.
+Aunque en verdad este juego existía mucho antes, y se juega en aulas de clase de diversas partes del mundo, ya que es una manera muy accesible y divertida de aprender vocabulario nuevo.
+
+### ¿Qué aportamos?
+
+- Nuestra aplicación no usa canvas como este, sino elementos HTML comunes y corrientes mediante la API Drag-and-Drop.
+- Puede ser usado en dispositivos móviles.
+- Tiene autenticación de usuarios y la posibilidad de crear sus propios juegos de palabras y compartirlos con la comunidad.
+- Una apertura para aprender mucho más que solo idiomas.
 
 ### El plan general
 
