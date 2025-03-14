@@ -4,9 +4,11 @@
 
 ### ¿Qué queremos?
 
-La inspiración es este juego en línea contenido enteramente en un canvas. El nuestro no usa canvas, sino elementos HTML comunes y corrientes mediante la API Drag-and-Drop.
+Queremos que la experiencia de aprender inglés sea más divertida. La inspiración es este juego en línea contenido enteramente en un canvas:
 
 ![alt text](./.readme-images/inspiration.png)
+
+Nuestra aplicación no usa canvas, sino elementos HTML comunes y corrientes mediante la API Drag-and-Drop, y puede ser usado en dispositivos móviles.
 
 ### El plan general
 
@@ -46,10 +48,12 @@ La inspiración es este juego en línea contenido enteramente en un canvas. El n
 
 En su etapa inicial, este proyecto era un sitio web de HTML, CSS y JavaScript puro que solo comprendí la capa de aplicación. El código está contenido en la carpeta [legacy](./legacy/) y se puede correr en el navegador desde el archivo index.html a través de VSCode localmente apoyándose de una extensión como _Live Preview_. Tiene la funcionalidad básica acabada.
 
-Ahora el proyecto es fullstack y se ha estructurado en tres capas apoyándonos de frameworks.
+Ahora el proyecto es una aplicación SPA estructurada en tres capas apoyándonos de frameworks.
 
-- Frontend: Vue.js
-- Backend: Node y Express.js
-- Persistencia: Base de datos SQLite en la nube (Turso)
+- Frontend: Vue.js + Bootstrap 5
+- Backend: Node + Express.js
+- Base de datos: SQLite (nube de Turso)
 
-Sin embargo, la funcionalidad básica de jugar no está terminada, pues faltan varios detalles en el frontend.
+Además, alojamos las imagenes en Cloudflare.
+
+La funcionalidad básica de jugar no está terminada aún en la capa del frontend.
