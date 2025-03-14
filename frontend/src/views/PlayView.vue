@@ -1,12 +1,13 @@
 <script type="module">
 import CardsService from "@/services/CardsService";
-import _ from "lodash";
+import _, { isNull, sample } from "lodash";
 
 export default {
   name: "play",
   data() {
     return {
       cards: [],
+      cardSample: null,
       numOptions: 4,
       rand: 0,
     };
@@ -16,17 +17,20 @@ export default {
   },
   async mounted() {
     await this.getCards();
+    await this.getSomeCards();
   },
   methods: {
     async getCards() {
       this.cards = await CardsService.getCards(this.deckId);
     },
-    getSomeCards() {
-      this.rand = _.sample()
+    async getSomeCards() {
+      this.cardSample = _.sampleSize(this.cards, this.numOptions)
+      console.log(this.cardSample)
+      
     },
-    printConsole() {
-      console.log(this.cards)
-    }
+    dragendHandler(ev) {
+
+    },
   },
 };
 </script>
@@ -44,10 +48,17 @@ export default {
     </div>
 
     <div class="options">
-      <article>{{ rand }}</article>
-      <article></article>
-      <article></article>
-      <article></article>
+      <template v-if="cardSample">
+        <article v-for="card in cardSample">
+          <img :src="card.image_url" alt="">
+        </article>
+      </template>
+      <template v-else>
+        <article></article>
+        <article></article>
+        <article></article>
+        <article></article>
+      </template>
       <div class="infobox"></div>
     </div>
 
@@ -55,16 +66,14 @@ export default {
       <span class="name">You</span>
       <div class="handplace">
         <div class="ring human"></div>
-        <img id="draggable" class="hand human" src="@/assets/play/hand-blue.png" />
+        <img id="draggable" class="hand human"
+        draggable="true"
+        @dragend="dragendHandler" src="@/assets/play/hand-blue.png" />
       </div>
 
       <span class="score">0</span>
     </div>
   </section>
-
-  <!-- <p v-for="card in cards">
-    <img :src="card.image_url" alt="">
-  </p> -->
 </template>
 
 <style scoped>
@@ -100,7 +109,7 @@ section.play {
       border: 5px solid #06341d;
       overflow: hidden;
 
-      img.item {
+      img {
         width: 100%;
         height: 100%;
         object-fit: cover;
