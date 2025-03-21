@@ -4,15 +4,16 @@ import cors from "cors"
 import routes from "./routes/routes.js"
 const app = express()
 
-app.listen(3000, () => {
-    console.log("server is up and listening to port 3000")
+app.listen(3000, "0.0.0.0", () => {
+    console.log("Server API is up and listening to port 3000")
 })
 
 app.use(express.json())
 
-app.use(cors({
-    origin: "http://192.168.1.5:5173"
-}))
+// app.use(cors({
+//     origin: "http://192.168.1.5:5173"
+// }))
+app.use(cors());
 
 app.use("/decks", routes)
 

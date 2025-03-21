@@ -1,7 +1,9 @@
 html, body {
     height: 100vh;
+    overflow: hidden;
 }
 
 #app {
     height: 100dvh;
+    overflow: hidden;
 }

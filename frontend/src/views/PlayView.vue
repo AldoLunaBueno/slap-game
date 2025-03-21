@@ -10,26 +10,111 @@ export default {
       cardSample: null,
       numOptions: 4,
       rand: 0,
+      isDragging: false,
+      startX: 0,
+      startY: 0,
+      x: null,
+      y: null,
+      originaParent: null,
+      canDrag: true,
     };
   },
   props: {
     deckId: String,
   },
   async mounted() {
-    await this.getCards();
-    await this.getSomeCards();
+    window.addEventListener("touchmove", this.handleMove);
+    window.addEventListener("touchend", this.handleEnd);
+    window.addEventListener("mousemove", this.handleMove);
+    window.addEventListener("mouseup", this.handleEnd);
+
+    try {
+        await this.getCards();
+        await this.getSomeCards();
+    } catch (error) {
+        console.error("Error al cargar datos:", error);
+    }
+  },
+  beforeUnmount() {
+    window.removeEventListener("touchmove", this.handleMove);
+    window.removeEventListener("touchend", this.handleEnd);
+    window.removeEventListener("mousemove", this.handleMove);
+    window.removeEventListener("mouseup", this.handleEnd);
   },
   methods: {
     async getCards() {
       this.cards = await CardsService.getCards(this.deckId);
     },
     async getSomeCards() {
-      this.cardSample = _.sampleSize(this.cards, this.numOptions)
-      console.log(this.cardSample)
-      
+      this.cardSample = _.sampleSize(this.cards, this.numOptions);
+      console.log(this.cardSample[0]);
     },
-    dragendHandler(ev) {
 
+    handleStart(event) {
+      if (!this.canDrag) return; // Prevent dragging if canDrag is false
+      this.isDragging = true;
+
+      const pointer = event.touches?.[0] || event;
+      this.startX = pointer.clientX;
+      this.startY = pointer.clientY;
+
+      const img = this.$refs.image;
+      this.originaParent = img.parentElement;
+      const imgRect = img.getBoundingClientRect();
+      document.body.appendChild(img);
+
+      // Set fixed position for smooth dragging
+      img.style.position = "fixed";
+      img.style.zIndex = "1000";
+      console.log(img.clientWidth);
+      this.x = imgRect.left;
+      this.y = imgRect.top;
+    },
+    handleMove(event) {
+      const pointer = event.touches?.[0] || event;
+      if (this.isDragging) {
+        const diffX = pointer.clientX - this.startX;
+        const diffY = pointer.clientY - this.startY;
+        this.x += diffX;
+        this.y += diffY;
+      }
+      this.startX = pointer.clientX;
+      this.startY = pointer.clientY;
+
+      this.startX = pointer.clientX;
+      this.startY = pointer.clientY;      
+    },
+    handleEnd() {
+      if (!this.isDragging) return;
+      this.isDragging = false;
+
+      // Get drop zones
+      const img = this.$refs.image;
+      const dropZones = this.$refs.dropZones;
+      let dropped = false;
+      if (!dropZones) {
+        this.originaParent.append(img);
+        return
+      }
+      dropZones.forEach((zone) => {
+        const rect = zone.getBoundingClientRect();
+        // Check if image is inside a zone
+        if (
+          this.startX >= rect.left &&
+          this.startX <= rect.right &&
+          this.startY >= rect.top &&
+          this.startY <= rect.bottom
+        ) {
+          zone.append(img);
+          this.x = 0; // Reset position relative to zone B
+          this.y = 0;
+          this.canDrag = false;
+          dropped = true;
+        }
+      });
+      if (!dropped) {
+        this.originaParent.append(img);
+      }
     },
   },
 };
@@ -39,8 +124,7 @@ export default {
   <section class="play">
     <div class="player computer">
       <span class="name">PC</span>
-      <div class="handplace">
-        <div class="ring computer"></div>
+      <div class="handplace computer">
         <img class="hand computer" src="@/assets/play/hand-red.png" />
       </div>
 
@@ -49,26 +133,37 @@ export default {
 
     <div class="options">
       <template v-if="cardSample">
-        <article v-for="card in cardSample">
-          <img :src="card.image_url" alt="">
+        <article v-for="(card, index) in cardSample" :key="index">
+          <div ref="dropZones"></div>
+          <img :src="card.image_url" alt="option" />
         </article>
       </template>
-      <template v-else>
-        <article></article>
-        <article></article>
-        <article></article>
-        <article></article>
+      <template v-if="!cardSample">
+        <article v-for="_ in numOptions"></article>
       </template>
       <div class="infobox"></div>
     </div>
 
     <div class="player human">
       <span class="name">You</span>
-      <div class="handplace">
-        <div class="ring human"></div>
-        <img id="draggable" class="hand human"
-        draggable="true"
-        @dragend="dragendHandler" src="@/assets/play/hand-blue.png" />
+      <div class="handplace human" ref="zoneA">
+        <img
+          class="hand human"
+          alt="hand"
+          draggable="false"
+          src="@/assets/play/hand-blue.png"
+          :style="{
+            left: `${x}px`,
+            top: `${y}px`,
+            cursor: isDragging ? 'grabbing' : 'grab',
+            position: isDragging ? 'absolute' : 'static',
+            width: '10vh',
+            height: 'auto',
+          }"
+          ref="image"
+          @mousedown="handleStart"
+          @touchstart="handleStart"
+        />
       </div>
 
       <span class="score">0</span>
@@ -87,7 +182,7 @@ section.play {
   align-items: center;
   gap: 6vh;
 
-  background-image: url('@/assets/play/blackboard.webp');
+  background-image: url("@/assets/play/blackboard.webp");
   background-size: cover; /* Cover entire container */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Avoid repetition */
@@ -109,11 +204,22 @@ section.play {
       border: 5px solid #06341d;
       overflow: hidden;
 
-      img {
+      & > img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
+
+      div {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+
     }
   }
 
@@ -125,23 +231,19 @@ section.play {
     gap: 10px;
 
     .handplace {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 16vh;
       height: 16vh;
+      border-radius: 50%;
 
-      .ring {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-
-        &.computer {
-          border: 1vh solid red;
-        }
-        &.human {
-          border: 1vh solid blue;
-        }
+      &.computer {
+        border: 1vh solid red;
+      }
+      &.human {
+        border: 1vh solid blue;
       }
     }
 
@@ -155,10 +257,9 @@ section.play {
   }
 
   .hand {
-    position: absolute;
     width: 10vh;
     height: auto;
-    touch-action: none;
+    z-index: 1;
 
     &.computer {
       pointer-events: none;
