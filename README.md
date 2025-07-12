@@ -1,5 +1,7 @@
 # Slap Game
 
+[🚀 Probar la aplicación en línea](https://aldolunabueno.github.io/slap-game/legacy/)
+
 ## Planeación
 
 ### ¿Qué queremos?
